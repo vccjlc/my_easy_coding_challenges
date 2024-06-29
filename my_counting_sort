@@ -1,0 +1,34 @@
+def countingSort(list_to_sort):
+    if not list_to_sort:
+        return list_to_sort
+
+    minimum = min(list_to_sort)
+    maximum = max(list_to_sort)
+    frequency_count = [0] * (maximum - minimum + 1)
+
+    # Find frequencies
+    for element in list_to_sort:
+        frequency_count[element - minimum] += 1
+
+    list_to_sort_index = 0  # This index will be used to modify the original list
+
+    # Modify values in the original list based on frequency_count
+    for index in range(len(frequency_count)):
+        while frequency_count[index] > 0:
+            list_to_sort[list_to_sort_index] = index + minimum  # Populate original list with one value
+            list_to_sort_index += 1  # Move further in original list
+            frequency_count[index] -= 1  # Decrement the frequency, because we have just "used" one occurrence
+
+    return list_to_sort
+
+
+# Input handling
+input_string = input("Enter numbers separated by space: ")
+list_to_sort = list(map(int, input_string.split()))
+
+# Print original list
+print("Original list:", list_to_sort)
+
+# Sort list and print sorted list
+sorted_list = countingSort(list_to_sort)
+print("Sorted list:", sorted_list)
