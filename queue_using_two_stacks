@@ -1,0 +1,50 @@
+class Queue:
+    def __init__(self):
+        self.enqueue_stack = []
+        self.dequeue_stack = []
+    
+    def enqueue(self, item):
+        self.enqueue_stack.append(item)
+    
+    def dequeue(self):
+        if not self.dequeue_stack:
+            while self.enqueue_stack:
+                self.dequeue_stack.append(self.enqueue_stack.pop())
+        return self.dequeue_stack.pop() if self.dequeue_stack else None
+    
+    def print_front(self):
+        if not self.dequeue_stack:
+            while self.enqueue_stack:
+                self.dequeue_stack.append(self.enqueue_stack.pop())
+        if self.dequeue_stack:
+            print(self.dequeue_stack[-1])
+
+
+    
+def main():
+    import sys
+    input_data = sys.stdin.read().splitlines()
+    if not input_data:  # Ensure there is input data
+        return  # Exit if no data is present
+    
+    try:
+        num_queries = int(input_data[0])  # Read the number of queries
+    except ValueError:
+        return  # Exit if the first line is not an integer
+    
+    queue = Queue()
+    
+    # Process each query
+    for i in range(1, min(num_queries + 1, len(input_data))):
+        query = input_data[i]
+        parts = query.split()
+        
+        if parts[0] == '1' and len(parts) == 2:
+            queue.enqueue(int(parts[1]))
+        elif parts[0] == '2':
+            queue.dequeue()
+        elif parts[0] == '3':
+            queue.print_front()
+
+if __name__ == "__main__":
+    main()
