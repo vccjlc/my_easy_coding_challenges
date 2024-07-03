@@ -1,0 +1,22 @@
+def isBalanced(s):
+    # Edge cases for immediate returns
+    if len(s) == 0:
+        return 'YES'
+    if len(s) % 2 == 1:
+        return 'NO'
+
+    # Dictionary to match the brackets
+    bracket_map = {'}': '{', ']': '[', ')': '('}
+    open_brackets = bracket_map.values()
+
+    stack = []
+
+    for bracket in s:
+        if bracket in open_brackets:
+            stack.append(bracket)
+        elif stack and stack[-1] == bracket_map[bracket]:
+            stack.pop()
+        else:
+            return 'NO'
+
+    return 'YES' if not stack else 'NO'
