@@ -1,0 +1,39 @@
+
+# not-stable counting sort (my version)
+def counting_sort(l):
+
+    # avoid error if the list is empty
+    if not l:
+        return[]
+
+    smallest = min(l)
+    largest = max(l)
+    rg = largest - smallest + 1
+
+    # count how many times each element of the input list occurs
+    frequencies = [0 for _ in range(rg)]
+    for num in l:
+        frequencies[num-smallest] += 1
+
+    # count how many elements are before each element
+    rolling_sum = frequencies[0]
+    for i in range(1, rg):
+        frequencies[i] += rolling_sum
+        rolling_sum = frequencies[i]
+
+    # iterate over frequencies (now cumulated) and place each element on its position
+    # in a new sorted list
+    final_len = len(l)
+    sorted_list = [None for _ in range(final_len)]
+    for i in range(rg):
+        if sorted_list[frequencies[i] - 1] is None:
+            sorted_list[frequencies[i] - 1] = i + smallest
+        # skip if already populated
+
+
+    # fill in the gaps
+    for i in range(final_len - 2, -1, -1):
+        if sorted_list[i] is None:
+            sorted_list[i] = sorted_list[i + 1]
+    #print(sorted_list)
+    return(sorted_list)
